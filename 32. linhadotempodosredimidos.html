@@ -1,0 +1,685 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>O Fio Condutor — O Corpo de Cristo na História</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Jost:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg-deep:#0B1224;
+    --bg-deep-2:#121B33;
+    --bg-panel:#161F3B;
+    --gold:#D4AF6A;
+    --gold-bright:#F0CE93;
+    --ivory:#F3EEE2;
+    --muted:#8B93AC;
+    --line:rgba(212,175,106,0.28);
+    --line-soft:rgba(212,175,106,0.12);
+    --serif:'Cormorant Garamond', serif;
+    --sans:'Jost', sans-serif;
+    --maxw:920px;
+  }
+
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg-deep);
+    color:var(--ivory);
+    font-family:var(--sans);
+    font-weight:300;
+    line-height:1.7;
+    -webkit-font-smoothing:antialiased;
+  }
+
+  ::selection{background:var(--gold); color:var(--bg-deep);}
+
+  a{color:var(--gold-bright);}
+  :focus-visible{outline:2px solid var(--gold-bright); outline-offset:3px;}
+
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 28px;}
+
+  .eyebrow{
+    font-family:var(--sans);
+    font-size:0.72rem;
+    letter-spacing:0.28em;
+    text-transform:uppercase;
+    color:var(--gold);
+    margin:0 0 14px;
+    font-weight:500;
+  }
+
+  h1,h2,h3{font-family:var(--serif); font-weight:500; margin:0; color:var(--ivory);}
+
+  p{margin:0 0 1em; color:var(--ivory); font-weight:300;}
+  p:last-child{margin-bottom:0;}
+
+  .muted{color:var(--muted);}
+
+  /* ---------- HERO ---------- */
+  .hero{
+    min-height:92vh;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    position:relative;
+    overflow:hidden;
+    padding:60px 28px 40px;
+  }
+  .stars{position:absolute; inset:0; z-index:0;}
+  .star{
+    position:absolute;
+    width:2px; height:2px;
+    background:var(--gold-bright);
+    border-radius:50%;
+    opacity:0.5;
+    animation:twinkle 5s ease-in-out infinite;
+  }
+  @keyframes twinkle{
+    0%,100%{opacity:0.15;}
+    50%{opacity:0.85;}
+  }
+  .hero-content{position:relative; z-index:1; max-width:680px;}
+  .hero h1{
+    font-size:clamp(2.4rem, 6vw, 4rem);
+    line-height:1.08;
+    letter-spacing:-0.01em;
+  }
+  .hero h1 em{
+    font-style:italic;
+    color:var(--gold-bright);
+  }
+  .hero .lede{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.25rem;
+    color:var(--muted);
+    max-width:520px;
+    margin:26px auto 0;
+  }
+  .scroll-cue{
+    margin-top:56px;
+    font-size:0.7rem;
+    letter-spacing:0.25em;
+    text-transform:uppercase;
+    color:var(--muted);
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:10px;
+  }
+  .scroll-cue span{
+    width:1px; height:34px;
+    background:linear-gradient(var(--gold), transparent);
+    animation:pulse-line 2.2s ease-in-out infinite;
+  }
+  @keyframes pulse-line{
+    0%,100%{opacity:0.3;}
+    50%{opacity:1;}
+  }
+
+  /* ---------- SECTION SHELL ---------- */
+  section.block{
+    padding:110px 0;
+    border-top:1px solid var(--line-soft);
+    position:relative;
+  }
+  .block-head{
+    max-width:560px;
+    margin-bottom:64px;
+  }
+  .block-head h2{
+    font-size:clamp(1.8rem, 4vw, 2.6rem);
+    line-height:1.15;
+  }
+  .block-head p{
+    margin-top:16px;
+    color:var(--muted);
+    font-size:1.02rem;
+  }
+
+  /* ---------- TIMELINE ---------- */
+  .timeline{
+    position:relative;
+    padding-left:52px;
+  }
+  .thread-svg{
+    position:absolute;
+    left:0; top:6px; bottom:6px;
+    width:52px;
+  }
+  .thread-path{
+    stroke:var(--gold);
+    stroke-width:1.4;
+    fill:none;
+    stroke-dasharray:1000;
+    stroke-dashoffset:1000;
+    transition:stroke-dashoffset 1.8s ease;
+  }
+  .thread-path.drawn{stroke-dashoffset:0;}
+
+  .era{
+    position:relative;
+    margin-bottom:14px;
+  }
+  .era-dot{
+    position:absolute;
+    left:-52px;
+    top:6px;
+    width:26px; height:26px;
+    border-radius:50%;
+    background:var(--bg-deep);
+    border:1.4px solid var(--gold);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-family:var(--serif);
+    font-size:0.78rem;
+    color:var(--gold-bright);
+    z-index:2;
+    transition:background .3s, transform .3s;
+  }
+  .era[data-open="true"] .era-dot{
+    background:var(--gold);
+    color:var(--bg-deep);
+    transform:scale(1.08);
+  }
+
+  .era-toggle{
+    width:100%;
+    text-align:left;
+    background:none;
+    border:none;
+    padding:14px 20px 14px 22px;
+    cursor:pointer;
+    display:flex;
+    align-items:baseline;
+    justify-content:space-between;
+    gap:16px;
+    color:var(--ivory);
+    border-radius:10px;
+    transition:background .25s;
+  }
+  .era-toggle:hover{background:var(--bg-panel);}
+  .era-toggle h3{
+    font-size:1.4rem;
+    font-weight:500;
+  }
+  .era-toggle .plus{
+    font-family:var(--sans);
+    font-size:1.1rem;
+    color:var(--gold);
+    transition:transform .3s;
+    flex:none;
+  }
+  .era[data-open="true"] .plus{transform:rotate(45deg);}
+
+  .era-body{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .45s ease;
+    padding-left:22px;
+  }
+  .era[data-open="true"] .era-body{max-height:520px;}
+  .era-body-inner{padding:6px 20px 26px;}
+
+  .verse{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.08rem;
+    color:var(--gold-bright);
+    border-left:2px solid var(--gold);
+    padding:4px 0 4px 16px;
+    margin:14px 0;
+  }
+  .verse cite{
+    display:block;
+    font-family:var(--sans);
+    font-style:normal;
+    font-size:0.72rem;
+    letter-spacing:0.12em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:6px;
+  }
+
+  /* ---------- THREE WAYS ---------- */
+  .ways{
+    display:grid;
+    grid-template-columns:repeat(3, 1fr);
+    gap:22px;
+  }
+  .way{
+    perspective:1200px;
+    height:280px;
+  }
+  .way-card{
+    position:relative;
+    width:100%; height:100%;
+    transform-style:preserve-3d;
+    transition:transform .6s cubic-bezier(.4,.2,.2,1);
+    cursor:pointer;
+  }
+  .way.flipped .way-card{transform:rotateY(180deg);}
+  .way-face{
+    position:absolute; inset:0;
+    backface-visibility:hidden;
+    border:1px solid var(--line);
+    border-radius:14px;
+    padding:26px 22px;
+    display:flex;
+    flex-direction:column;
+  }
+  .way-front{
+    background:var(--bg-panel);
+    align-items:flex-start;
+    justify-content:space-between;
+  }
+  .way-front .glyph{
+    font-family:var(--serif);
+    font-size:2.6rem;
+    color:var(--gold);
+    line-height:1;
+  }
+  .way-front h3{font-size:1.35rem; margin-top:18px;}
+  .way-front .hint{
+    font-size:0.72rem;
+    letter-spacing:0.14em;
+    text-transform:uppercase;
+    color:var(--muted);
+    margin-top:auto;
+  }
+  .way-back{
+    background:var(--gold);
+    color:var(--bg-deep);
+    transform:rotateY(180deg);
+    justify-content:center;
+  }
+  .way-back .verse{
+    color:var(--bg-deep);
+    border-left-color:var(--bg-deep);
+    font-size:1rem;
+  }
+  .way-back .verse cite{color:rgba(11,18,36,0.65);}
+  .way-back p{color:rgba(11,18,36,0.85); font-size:0.92rem;}
+
+  /* ---------- CTA ---------- */
+  .cta-section{
+    text-align:center;
+  }
+  .cta-section .block-head{margin:0 auto 40px; text-align:center;}
+  .verses-grid{
+    display:grid;
+    gap:18px;
+    grid-template-columns:repeat(3, 1fr);
+    margin-bottom:48px;
+    text-align:left;
+  }
+  .verses-grid .verse{margin:0;}
+
+  .decision-box{
+    background:var(--bg-panel);
+    border:1px solid var(--line);
+    border-radius:16px;
+    padding:44px 36px;
+    max-width:640px;
+    margin:0 auto;
+  }
+  .decision-box h3{font-size:1.5rem; margin-bottom:14px;}
+  .decision-box p{color:var(--muted); font-size:1rem;}
+
+  .btn{
+    display:inline-block;
+    margin-top:24px;
+    padding:15px 34px;
+    background:var(--gold);
+    color:var(--bg-deep);
+    text-decoration:none;
+    border:none;
+    border-radius:40px;
+    font-family:var(--sans);
+    font-weight:500;
+    font-size:0.95rem;
+    letter-spacing:0.02em;
+    cursor:pointer;
+    transition:transform .2s, background .2s;
+  }
+  .btn:hover{background:var(--gold-bright); transform:translateY(-1px);}
+  .btn.ghost{
+    background:transparent;
+    border:1px solid var(--gold);
+    color:var(--gold-bright);
+  }
+  .btn.ghost:hover{background:var(--line-soft);}
+
+  .prayer{
+    max-height:0;
+    overflow:hidden;
+    transition:max-height .5s ease;
+  }
+  .prayer.open{max-height:400px;}
+  .prayer-inner{
+    margin-top:26px;
+    padding-top:26px;
+    border-top:1px solid var(--line);
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.15rem;
+    color:var(--gold-bright);
+    text-align:left;
+  }
+
+  /* ---------- FOOTER ---------- */
+  footer{
+    padding:70px 0 60px;
+    text-align:center;
+    border-top:1px solid var(--line-soft);
+  }
+  footer .station{
+    font-family:var(--serif);
+    font-style:italic;
+    font-size:1.1rem;
+    color:var(--muted);
+    margin-bottom:18px;
+  }
+  footer small{
+    display:block;
+    margin-top:36px;
+    color:var(--muted);
+    font-size:0.75rem;
+    letter-spacing:0.05em;
+  }
+
+  @media (max-width: 760px){
+    .ways{grid-template-columns:1fr;}
+    .way{height:240px;}
+    .verses-grid{grid-template-columns:1fr;}
+    section.block{padding:80px 0;}
+  }
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important; transition:none !important; scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="stars" id="stars"></div>
+  <div class="hero-content">
+    <p class="eyebrow">Uma síntese da história bíblica</p>
+    <h1>Toda a história é <em>uma só</em> história</h1>
+    <p class="lede">Da criação ao milênio, um único fio percorre as Escrituras: a formação do Corpo de Cristo.</p>
+    <div class="scroll-cue"><span></span>role para seguir o fio</div>
+  </div>
+</section>
+
+<section class="block" id="tese">
+  <div class="wrap">
+    <div class="block-head">
+      <p class="eyebrow">A tese</p>
+      <h2>Não uma sucessão de eventos — um projeto eterno</h2>
+      <p>A Bíblia não é uma coleção de histórias isoladas. É a revelação progressiva de um plano que Deus concebeu antes da fundação do mundo: reunir um povo em Cristo. Jesus é o Eleito; a salvação acontece <strong>n'Ele</strong>, e reconhecer Sua divindade é o que dá entrada nesse Corpo.</p>
+    </div>
+    <div class="verse">
+      "Como também nos elegeu nele antes da fundação do mundo, para que fôssemos santos e irrepreensíveis diante dele em amor."
+      <cite>Efésios 1:4</cite>
+    </div>
+    <div class="verse">
+      "E ele é antes de todas as coisas, e todas as coisas subsistem por ele. E ele é a cabeça do corpo, da igreja."
+      <cite>Colossenses 1:17-18</cite>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="estrutura">
+  <div class="wrap">
+    <div class="block-head">
+      <p class="eyebrow">A estrutura da revelação</p>
+      <h2>Um projeto, três tempos</h2>
+      <p>Deus já conhece todos os que serão salvos. Nós chegamos a esse conhecimento por convicção interna e revelação — em três momentos da história.</p>
+    </div>
+
+    <div class="timeline" id="timeline">
+      <svg class="thread-svg" id="threadSvg" viewBox="0 0 52 720" preserveAspectRatio="none" aria-hidden="true">
+        <path class="thread-path" id="threadPath" d="M26,0 L26,720"/>
+      </svg>
+
+      <div class="era" data-open="false">
+        <div class="era-dot">1</div>
+        <button class="era-toggle" aria-expanded="false">
+          <h3>Antigo Testamento</h3>
+          <span class="plus">+</span>
+        </button>
+        <div class="era-body">
+          <div class="era-body-inner">
+            <p>A revelação chega através dos patriarcas e profetas — testemunhas que anunciam, cada uma à sua maneira, o Eleito que haveria de vir.</p>
+            <div class="verse">
+              "Por isso, também nós, tendo em redor de nós tão grande nuvem de testemunhas... corramos com paciência a carreira que nos está proposta."
+              <cite>Hebreus 12:1</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="era" data-open="false">
+        <div class="era-dot">2</div>
+        <button class="era-toggle" aria-expanded="false">
+          <h3>Era da Igreja</h3>
+          <span class="plus">+</span>
+        </button>
+        <div class="era-body">
+          <div class="era-body-inner">
+            <p>Com a vinda de Cristo, o Corpo alcança sua plenitude: judeus e gentios, unidos por um só Espírito, tornam-se membros de um único organismo vivo.</p>
+            <div class="verse">
+              "Pois assim como o corpo é um, e tem muitos membros... assim é Cristo também. Porque todos nós fomos batizados em um Espírito, formando um corpo."
+              <cite>1 Coríntios 12:12-13</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="era" data-open="false">
+        <div class="era-dot">3</div>
+        <button class="era-toggle" aria-expanded="false">
+          <h3>Tribulação e Milênio</h3>
+          <span class="plus">+</span>
+        </button>
+        <div class="era-body">
+          <div class="era-body-inner">
+            <p>O número dos eleitos se completa. Uma multidão de todas as nações é selada, e o reinado de Cristo se estabelece antes do fim.</p>
+            <div class="verse">
+              "Depois destas coisas olhei, e eis aqui uma multidão, a qual ninguém podia contar, de todas as nações, e tribos, e povos, e línguas..."
+              <cite>Apocalipse 7:9</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block" id="linhas">
+  <div class="wrap">
+    <div class="block-head">
+      <p class="eyebrow">As linhas mestras</p>
+      <h2>Três caminhos, um só Criador</h2>
+      <p>Nossa busca por Deus se manifesta de três formas. Toque em cada uma para ver a base bíblica.</p>
+    </div>
+
+    <div class="ways">
+      <div class="way" tabindex="0" role="button" aria-pressed="false">
+        <div class="way-card">
+          <div class="way-face way-front">
+            <span class="glyph">✦</span>
+            <div>
+              <h3>Bíblia</h3>
+              <p class="muted" style="font-size:0.9rem; margin-top:6px;">A Palavra</p>
+            </div>
+            <span class="hint">toque para ver o versículo</span>
+          </div>
+          <div class="way-face way-back">
+            <div class="verse">
+              "No princípio era o Verbo, e o Verbo estava com Deus, e o Verbo era Deus... E o Verbo se fez carne, e habitou entre nós."
+              <cite>João 1:1,14</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="way" tabindex="0" role="button" aria-pressed="false">
+        <div class="way-card">
+          <div class="way-face way-front">
+            <span class="glyph">✧</span>
+            <div>
+              <h3>Criação</h3>
+              <p class="muted" style="font-size:0.9rem; margin-top:6px;">A Obra</p>
+            </div>
+            <span class="hint">toque para ver o versículo</span>
+          </div>
+          <div class="way-face way-back">
+            <div class="verse">
+              "Os céus contam a glória de Deus, e o firmamento anuncia a obra das suas mãos."
+              <cite>Salmos 19:1</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="way" tabindex="0" role="button" aria-pressed="false">
+        <div class="way-card">
+          <div class="way-face way-front">
+            <span class="glyph">✥</span>
+            <div>
+              <h3>Oração</h3>
+              <p class="muted" style="font-size:0.9rem; margin-top:6px;">A Intimidade</p>
+            </div>
+            <span class="hint">toque para ver o versículo</span>
+          </div>
+          <div class="way-face way-back">
+            <div class="verse">
+              "Orando em todo tempo com toda a oração e súplica em Espírito... com toda a perseverança."
+              <cite>Efésios 6:18</cite>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="block cta-section" id="convite">
+  <div class="wrap">
+    <div class="block-head">
+      <p class="eyebrow">O convite</p>
+      <h2>Você já faz parte deste Corpo?</h2>
+      <p>Fazer parte não depende de mérito, mas de um passo simples de fé.</p>
+    </div>
+
+    <div class="verses-grid">
+      <div class="verse">
+        "Porque Deus amou o mundo de tal maneira que deu o seu Filho unigênito, para que todo aquele que nele crê não pereça, mas tenha a vida eterna."
+        <cite>João 3:16</cite>
+      </div>
+      <div class="verse">
+        "Porque pela graça sois salvos, por meio da fé; e isto não vem de vós, é dom de Deus."
+        <cite>Efésios 2:8-9</cite>
+      </div>
+      <div class="verse">
+        "Se com a tua boca confessares ao Senhor Jesus, e em teu coração creres que Deus o ressuscitou dos mortos, serás salvo."
+        <cite>Romanos 10:9</cite>
+      </div>
+    </div>
+
+    <div class="decision-box">
+      <h3>Um passo, agora</h3>
+      <p>Se você deseja entregar sua vida a Cristo e entrar nesse Corpo, você pode fazer essa oração agora mesmo, em silêncio ou em voz alta.</p>
+      <button class="btn ghost" id="prayerToggle" aria-expanded="false">Quero fazer essa oração</button>
+      <div class="prayer" id="prayerBox">
+        <div class="prayer-inner">
+          "Senhor Jesus, eu creio que és o Filho de Deus. Reconheço que preciso de ti. Entrego minha vida em tuas mãos e te recebo como meu Salvador. Obrigado por me incluir no teu Corpo. Amém."
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <p class="station">Continue caminhando na Palavra, na oração e na comunhão</p>
+    <a class="btn" href="https://www.radiomateus633.com" target="_blank" rel="noopener">Ouça a Rádio Mateus 6:33 — Pr. João Alves</a>
+    <small>Baseado na tese "O Corpo Místico: Fio Condutor da História"</small>
+  </div>
+</footer>
+
+<script>
+  // scattered stars in hero
+  const starsWrap = document.getElementById('stars');
+  const starCount = 44;
+  for(let i=0;i<starCount;i++){
+    const s = document.createElement('div');
+    s.className = 'star';
+    s.style.left = Math.random()*100+'%';
+    s.style.top = Math.random()*100+'%';
+    s.style.animationDelay = (Math.random()*5)+'s';
+    starsWrap.appendChild(s);
+  }
+
+  // era accordion
+  document.querySelectorAll('.era').forEach(era => {
+    const btn = era.querySelector('.era-toggle');
+    btn.addEventListener('click', () => {
+      const isOpen = era.getAttribute('data-open') === 'true';
+      document.querySelectorAll('.era').forEach(e => {
+        e.setAttribute('data-open','false');
+        e.querySelector('.era-toggle').setAttribute('aria-expanded','false');
+      });
+      if(!isOpen){
+        era.setAttribute('data-open','true');
+        btn.setAttribute('aria-expanded','true');
+      }
+    });
+  });
+
+  // draw thread when timeline enters view
+  const threadPath = document.getElementById('threadPath');
+  const timeline = document.getElementById('timeline');
+  const io = new IntersectionObserver((entries)=>{
+    entries.forEach(entry=>{
+      if(entry.isIntersecting){
+        threadPath.classList.add('drawn');
+        io.disconnect();
+      }
+    });
+  }, {threshold:0.2});
+  io.observe(timeline);
+
+  // flip cards
+  document.querySelectorAll('.way').forEach(way => {
+    const toggle = () => {
+      const flipped = way.classList.toggle('flipped');
+      way.setAttribute('aria-pressed', flipped ? 'true':'false');
+    };
+    way.addEventListener('click', toggle);
+    way.addEventListener('keydown', (e)=>{
+      if(e.key==='Enter' || e.key===' '){ e.preventDefault(); toggle(); }
+    });
+  });
+
+  // prayer reveal
+  const prayerToggle = document.getElementById('prayerToggle');
+  const prayerBox = document.getElementById('prayerBox');
+  prayerToggle.addEventListener('click', ()=>{
+    const open = prayerBox.classList.toggle('open');
+    prayerToggle.setAttribute('aria-expanded', open ? 'true':'false');
+    prayerToggle.textContent = open ? 'Ocultar oração' : 'Quero fazer essa oração';
+  });
+</script>
+
+</body>
+</html>
